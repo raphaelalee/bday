@@ -22,31 +22,6 @@
       --accent-3: #b9c3ff;     /* periwinkle */
       --shadow: 0 12px 30px rgba(79,57,123,.12);
       --radius: 22px;
-      .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: linear-gradient(90deg, #ffe3ea, #edf2ff, #e7fff3);
-  border-bottom: 1px solid var(--stroke);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-}
-
-.header-inner {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 12px 20px;
-  text-align: center;
-}
-
-.logo {
-  margin: 0;
-  font-family: "Playfair Display", serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #d9466a;
-  letter-spacing: 1px;
-}
-
     }
 
     * { box-sizing: border-box }
@@ -60,8 +35,25 @@
         radial-gradient(1000px 700px at 90% 10%, #e9f9ff 0%, #e9f9ff00 60%),
         linear-gradient(180deg, var(--bg-1), var(--bg-2));
       font-family: Outfit, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      display:flex; align-items:center; justify-content:center;
-      padding:28px;
+      padding:0 0 28px 0;
+    }
+
+    /* Sticky Header */
+    .site-header {
+      position: sticky; top: 0; z-index: 20;
+      background: linear-gradient(90deg, #ffe3ea, #edf2ff, #e7fff3);
+      border-bottom: 1px solid var(--stroke);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+    .header-inner {
+      max-width: 1000px; margin: 0 auto;
+      padding: 12px 20px; text-align: center;
+    }
+    .logo {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: #d9466a; letter-spacing: 1px;
     }
 
     /* Floating blobs (gentle) */
@@ -77,10 +69,12 @@
     @media (prefers-reduced-motion: reduce){ .b1,.b2,.b3{ animation:none } }
 
     .wrap{
-      width:min(980px, 100%);
+      width:min(1020px, 100%);
       display:grid; gap:22px;
       grid-template-columns: 1.2fr .8fr;
       position:relative; z-index:1;
+      padding: 24px;
+      margin: 0 auto;
     }
     @media (max-width:900px){ .wrap{ grid-template-columns:1fr } }
 
@@ -99,7 +93,6 @@
       content:"";
       position:absolute; inset:-1px; border-radius: inherit; padding:1px;
       background: linear-gradient(135deg, #ffd6e0, #bcd3ff, #c7ffe7);
-
       -webkit-mask-composite: xor; mask-composite: exclude;
       pointer-events:none; opacity:.7;
     }
@@ -200,43 +193,38 @@
     /* Confetti canvas (hearts) */
     #confetti{ position:fixed; inset:0; pointer-events:none; z-index:5 }
 
-    /* Mini Calendar */
-    .calendar{
-      border-radius:16px; border:1px solid var(--stroke);
+    /* Love letter + gallery */
+    .letter{
       background:linear-gradient(180deg, #ffffff, #fbfbff);
-      box-shadow: var(--shadow);
-      overflow:hidden;
+      border:1px dashed #ffd6e3; border-radius:16px; padding:16px;
     }
-    .cal-head{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 14px; border-bottom:1px solid var(--stroke);
-      background: linear-gradient(90deg, #ffe3ea, #edf2ff, #e7fff3);
+    .letter button{ margin-top:8px }
+    .letter p{ margin:10px 0 0 0; display:none }
+
+    .gallery{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;
     }
-    .cal-title{ font-weight:800 }
-    .cal-grid{
-      display:grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap:0; padding:10px;
+    .ph{
+      aspect-ratio: 1 / 1; border-radius:14px; border:1px dashed var(--stroke);
+      background:linear-gradient(180deg, #fff, #fafaff);
+      display:flex; align-items:center; justify-content:center;
+      color:#9aa0b3; font-weight:700;
     }
-    .dow, .day{
-      text-align:center; padding:10px 6px; font-weight:600; color:#7b7b8a;
-    }
-    .day{
-      border-radius:12px; margin:4px; color:var(--ink); font-weight:700;
-    }
-    .day.disabled{ opacity:.35; font-weight:600 }
-    .day.event{
-      position:relative; background: #fff0f4; color:#d9466a; box-shadow: inset 0 0 0 2px #ffd6e3;
-    }
-    .day.event::after{
-      content:"💗"; position:absolute; right:8px; top:6px; font-size:14px; opacity:.9;
-    }
-    .cal-foot{
-      padding:10px 12px; border-top:1px solid var(--stroke); color:#7b7b8a; font-size:.85rem;
+
+    footer{
+      width:min(1020px, 100%); margin: 6px auto 0; padding: 0 24px;
+      color:#8a8fa3; font-size:.85rem; text-align:center;
     }
   </style>
 </head>
 <body>
+  <!-- Sticky header (your text) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <h2 class="logo">🌸 HAPPY 20TH BIRHDAY MY LOVE 🌸</h2>
+    </div>
+  </header>
+
   <!-- soft blobs -->
   <div class="blob b1"></div>
   <div class="blob b2"></div>
@@ -253,7 +241,7 @@
     </section>
 
     <!-- LEFT -->
-    <section class="card">
+    <section class="card" id="details">
       <h2>Details</h2>
       <div class="info">
         <div class="row"><span class="lbl">Meet-up</span><span class="val">Your house</span></div>
@@ -278,7 +266,7 @@
     </section>
 
     <!-- RIGHT -->
-    <section class="card">
+    <section class="card" id="plan">
       <h2>Plan & RSVP</h2>
       <ul class="timeline">
         <li><span class="dot"></span><strong>Gift Opening</strong> — quick reveal to kick things off</li>
@@ -297,22 +285,34 @@
       </div>
     </section>
 
-    <!-- INLINE CALENDAR -->
+    <!-- LOVE LETTER -->
     <section class="card">
-      <h2>Calendar</h2>
-      <div class="calendar" id="miniCal">
-        <div class="cal-head">
-          <div class="cal-title" id="calTitle">August 2025</div>
-        </div>
-        <div class="cal-grid" id="calGrid">
-          <!-- JS injects day-of-week + days -->
-        </div>
-        <div class="cal-foot">
-          Event highlighted with a heart on the exact date. Timezone: GMT+8 (Singapore).
-        </div>
+      <h2>Open Letter</h2>
+      <div class="letter">
+        <strong>for you, my love —</strong>
+        <p id="letterText">
+          today we celebrate you. thank you for being my safe place, my laugh, my favourite hello.
+          can’t wait to make new memories with you — starting at 1pm. 🤍
+        </p>
+        <button class="btn-primary" id="toggleLetter">Open</button>
       </div>
     </section>
+
+    <!-- MEMORY GALLERY (placeholders to replace with photos later) -->
+    <section class="card">
+      <h2>Little Moments</h2>
+      <div class="gallery">
+        <div class="ph">Add Photo</div>
+        <div class="ph">Add Photo</div>
+        <div class="ph">Add Photo</div>
+      </div>
+      <p class="small" style="margin-top:8px">Tip: replace the three “Add Photo” boxes with your images (drop <code>&lt;img src="..." alt="..."&gt;</code> inside each <code>.ph</code>).</p>
+    </section>
   </main>
+
+  <footer>
+    Made with love • Singapore (GMT+8)
+  </footer>
 
   <script>
     // --- Event Date/Time (explicit GMT+8) ---
@@ -392,54 +392,15 @@
     }
     function esc(s){ return String(s).replace(/([,;])/g,"\\$1").replace(/\n/g,"\\n") }
 
-    // --- Mini Calendar Builder (month of the event) ---
-    const calTitle = document.getElementById("calTitle");
-    const calGrid = document.getElementById("calGrid");
-
-    buildMiniCalendar(eventDate);
-
-    function buildMiniCalendar(date){
-      // Month metadata (local to your browser’s TZ; event itself is fixed GMT+8)
-      const y = date.getFullYear();
-      const m = date.getMonth(); // 0..11
-      const firstOfMonth = new Date(Date.UTC(y, m, 1));
-      const startWeekday = (firstOfMonth.getUTCDay() + 6) % 7; // make Monday=0
-      const daysInMonth = new Date(Date.UTC(y, m+1, 0)).getUTCDate();
-
-      const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-      calTitle.textContent = `${monthNames[m]} ${y}`;
-
-      calGrid.innerHTML = "";
-      const dows = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-      for (const d of dows){
-        const el = document.createElement("div");
-        el.className = "dow";
-        el.textContent = d;
-        calGrid.appendChild(el);
-      }
-
-      // Leading blanks
-      for (let i=0;i<startWeekday;i++){
-        const blank = document.createElement("div");
-        blank.className = "day disabled";
-        blank.textContent = "";
-        calGrid.appendChild(blank);
-      }
-
-      // Days
-      for (let day=1; day<=daysInMonth; day++){
-        const cell = document.createElement("div");
-        cell.className = "day";
-        cell.textContent = day;
-
-        if (y === eventDate.getUTCFullYear() && m === eventDate.getUTCMonth() && day === eventDate.getUTCDate()){
-          cell.classList.add("event");
-          cell.title = "Happy 20th Birthday • 1:00 PM (GMT+8)";
-        }
-
-        calGrid.appendChild(cell);
-      }
-    }
+    // --- Love letter toggle ---
+    const letterText = document.getElementById("letterText");
+    const toggleLetter = document.getElementById("toggleLetter");
+    let open = false;
+    toggleLetter.addEventListener("click", ()=>{
+      open = !open;
+      letterText.style.display = open ? "block" : "none";
+      toggleLetter.textContent = open ? "Close" : "Open";
+    });
 
     // --- Heart confetti (no libs) ---
     const canvas = document.getElementById("confetti");
@@ -488,10 +449,4 @@
     }
   </script>
 </body>
-<header class="site-header">
-  <div class="header-inner">
-    <h2 class="logo">🌸 HAPPY 20TH BIRTHDAY MY LOVE 🌸</h2>
-  </div>
-</header>
-
 </html>
