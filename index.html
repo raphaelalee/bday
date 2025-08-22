@@ -17,9 +17,9 @@
       --ink: #3b3b44;
       --muted: #7b7b8a;
       --stroke: #e8e7f2;
-      --accent: #ff91a4;       /* rosy pink */
-      --accent-2: #a7f3d0;     /* mint */
-      --accent-3: #b9c3ff;     /* periwinkle */
+      --accent: #ff91a4;
+      --accent-2: #a7f3d0;
+      --accent-3: #b9c3ff;
       --shadow: 0 12px 30px rgba(79,57,123,.12);
       --radius: 22px;
     }
@@ -193,32 +193,17 @@
     /* Confetti canvas (hearts) */
     #confetti{ position:fixed; inset:0; pointer-events:none; z-index:5 }
 
-    /* Love letter + gallery */
+    /* Love letter */
     .letter{
       background:linear-gradient(180deg, #ffffff, #fbfbff);
       border:1px dashed #ffd6e3; border-radius:16px; padding:16px;
     }
     .letter button{ margin-top:8px }
     .letter p{ margin:10px 0 0 0; display:none }
-
-    .gallery{
-      display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;
-    }
-    .ph{
-      aspect-ratio: 1 / 1; border-radius:14px; border:1px dashed var(--stroke);
-      background:linear-gradient(180deg, #fff, #fafaff);
-      display:flex; align-items:center; justify-content:center;
-      color:#9aa0b3; font-weight:700;
-    }
-
-    footer{
-      width:min(1020px, 100%); margin: 6px auto 0; padding: 0 24px;
-      color:#8a8fa3; font-size:.85rem; text-align:center;
-    }
   </style>
 </head>
 <body>
-  <!-- Sticky header (your text) -->
+  <!-- Sticky header -->
   <header class="site-header">
     <div class="header-inner">
       <h2 class="logo">🌸 HAPPY 20TH BIRHDAY MY LOVE 🌸</h2>
@@ -269,15 +254,17 @@
     <section class="card" id="plan">
       <h2>Plan & RSVP</h2>
       <ul class="timeline">
-        <li><span class="dot"></span><strong>Gift Opening</strong> </li>
-        <li><span class="dot"></span><strong>Lunch Together</strong> </li>
+        <li><span class="dot"></span><strong>Gift Opening</strong></li>
+        <li><span class="dot"></span><strong>Lunch Together</strong></li>
         <li><span class="dot"></span><strong>Photobooth</strong> — snapshots + memories</li>
-        <li><span class="dot"></span><strong>Dinner</strong> </li>
+        <li><span class="dot"></span><strong>Dinner</strong></li>
       </ul>
 
       <div style="margin-top:16px">
         <div class="actions">
           <button class="btn-primary" id="yesBtn">Yes, I’m coming 💗</button>
+          <!-- If you want .ics back, uncomment next line -->
+          <!-- <button class="btn-ghost" id="calBtn" title="Download calendar event">Add to Calendar (.ics)</button> -->
           <a id="gcalLink" class="btn btn-ghost" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
         </div>
         <p class="note" id="yay">Yay! See you soon baby💞</p>
@@ -296,156 +283,46 @@
         <button class="btn-primary" id="toggleLetter">Open</button>
       </div>
     </section>
-
-    <!-- MEMORY GALLERY (placeholders to replace with photos later) -->
-    <section class="card">
-      <h2>Little Moments</h2>
-      <div class="gallery">
-        <div class="ph">Add Photo</div>
-        <div class="ph">Add Photo</div>
-        <div class="ph">Add Photo</div>
-      </div>
-      <p class="small" style="margin-top:8px">Tip: replace the three “Add Photo” boxes with your images (drop <code>&lt;img src="..." alt="..."&gt;</code> inside each <code>.ph</code>).</p>
-    </section>
   </main>
 
-  <footer>
-    Made with love • Singapore (GMT+8)
-  </footer>
-
   <script>
-    // --- Event Date/Time (explicit GMT+8) ---
-    const eventISO = "2025-08-26T13:00:00+08:00"; // Tue, 26 Aug 2025, 1:00 PM GMT+8
+    const eventISO = "2025-08-26T13:00:00+08:00";
     const eventDate = new Date(eventISO);
     const eventMs = eventDate.getTime();
 
-    // --- Countdown ---
-    const el = {
-      d: document.getElementById("d"),
-      h: document.getElementById("h"),
-      m: document.getElementById("m"),
-      s: document.getElementById("s"),
-    };
+    // Countdown
+    const el = { d:document.getElementById("d"), h:document.getElementById("h"), m:document.getElementById("m"), s:document.getElementById("s") };
     function tick(){
-      const now = Date.now();
-      const diff = eventMs - now;
-      if (diff <= 0){
-        el.d.textContent = "0"; el.h.textContent = "00"; el.m.textContent = "00"; el.s.textContent = "00";
-        return;
-      }
-      const d = Math.floor(diff / (1000*60*60*24));
-      const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-      const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-      const s = Math.floor((diff % (1000*60)) / 1000);
-      el.d.textContent = d;
-      el.h.textContent = h.toString().padStart(2,"0");
-      el.m.textContent = m.toString().padStart(2,"0");
-      el.s.textContent = s.toString().padStart(2,"0");
+      const diff = eventMs - Date.now();
+      if(diff<=0){ el.d.textContent="0"; el.h.textContent="00"; el.m.textContent="00"; el.s.textContent="00"; return; }
+      el.d.textContent=Math.floor(diff/(1000*60*60*24));
+      el.h.textContent=String(Math.floor(diff%(1000*60*60*24)/(1000*60*60))).padStart(2,"0");
+      el.m.textContent=String(Math.floor(diff%(1000*60*60)/(1000*60))).padStart(2,"0");
+      el.s.textContent=String(Math.floor(diff%(1000*60)/1000)).padStart(2,"0");
     }
-    tick(); setInterval(tick, 1000);
+    tick(); setInterval(tick,1000);
 
-    // --- RSVP + heart confetti ---
-    const yay = document.getElementById("yay");
-    const yesBtn = document.getElementById("yesBtn");
-    yesBtn.addEventListener("click", () => {
-      yay.style.display = "block";
-      heartConfetti();
-    });
+    // RSVP
+    const yay=document.getElementById("yay"), yesBtn=document.getElementById("yesBtn");
+    if(yesBtn) yesBtn.addEventListener("click",()=>{ yay.style.display="block"; heartConfetti(); });
 
-    // --- Add to Calendar (.ics) ---
-    document.getElementById("calBtn").addEventListener("click", () => {
-      const title = "Happy 20th Birthday";
-      const start = toICSDate(eventDate);
-      const end = toICSDate(new Date(eventDate.getTime() + 2*60*60*1000)); // +2h
-      const desc = "Meet at your house. Dress code: White. Next stop: Secret restaurant.";
-      const loc = "Your House";
-      const ics = [
-        "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Birthday//EN","BEGIN:VEVENT",
-        `UID:${crypto.randomUUID()}@cute.party`,
-        `DTSTAMP:${toICSDate(new Date())}`,
-        `DTSTART:${start}`,`DTEND:${end}`,
-        `SUMMARY:${esc(title)}`,`DESCRIPTION:${esc(desc)}`,`LOCATION:${esc(loc)}`,
-        "END:VEVENT","END:VCALENDAR"
-      ].join("\r\n");
-      const blob = new Blob([ics], {type:"text/calendar;charset=utf-8"});
-      const url = URL.createObjectURL(blob);
-      const a = Object.assign(document.createElement("a"), {href:url, download:"birthday.ics"});
-      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    });
-
-    // --- Google Calendar link (pre-filled) ---
-    const gLink = document.getElementById("gcalLink");
-    const gTitle = encodeURIComponent("Happy 20th Birthday");
-    // Google Calendar expects UTC in YYYYMMDDTHHMMSSZ
-    const gStart = toICSDate(eventDate);
-    const gEnd = toICSDate(new Date(eventDate.getTime() + 2*60*60*1000));
-    const gDetails = encodeURIComponent("Meet at your house. Dress code: White. Next stop: Secret restaurant.");
-    const gLocation = encodeURIComponent("Your House");
-    gLink.href =
-      `https://calendar.google.com/calendar/r/eventedit?text=${gTitle}&dates=${gStart}/${gEnd}&details=${gDetails}&location=${gLocation}`;
-
-    function toICSDate(dt){
-      const pad = n => String(n).padStart(2,"0");
-      return dt.getUTCFullYear() + pad(dt.getUTCMonth()+1) + pad(dt.getUTCDate()) + "T" +
-             pad(dt.getUTCHours()) + pad(dt.getUTCMinutes()) + pad(dt.getUTCSeconds()) + "Z";
+    // Google Calendar link
+    const gLink=document.getElementById("gcalLink");
+    if(gLink){
+      const gTitle=encodeURIComponent("Happy 20th Birthday");
+      const gStart=toICSDate(eventDate), gEnd=toICSDate(new Date(eventDate.getTime()+2*60*60*1000));
+      const gDetails=encodeURIComponent("Meet at your house. Dress code: White. Next stop: Secret restaurant.");
+      const gLocation=encodeURIComponent("Your House");
+      gLink.href=`https://calendar.google.com/calendar/r/eventedit?text=${gTitle}&dates=${gStart}/${gEnd}&details=${gDetails}&location=${gLocation}`;
     }
-    function esc(s){ return String(s).replace(/([,;])/g,"\\$1").replace(/\n/g,"\\n") }
+    function toICSDate(dt){const p=n=>String(n).padStart(2,"0");return dt.getUTCFullYear()+p(dt.getUTCMonth()+1)+p(dt.getUTCDate())+"T"+p(dt.getUTCHours())+p(dt.getUTCMinutes())+p(dt.getUTCSeconds())+"Z";}
 
-    // --- Love letter toggle ---
-    const letterText = document.getElementById("letterText");
-    const toggleLetter = document.getElementById("toggleLetter");
-    let open = false;
-    toggleLetter.addEventListener("click", ()=>{
-      open = !open;
-      letterText.style.display = open ? "block" : "none";
-      toggleLetter.textContent = open ? "Close" : "Open";
-    });
+    // Letter toggle
+    const letterText=document.getElementById("letterText"), toggleLetter=document.getElementById("toggleLetter");
+    if(toggleLetter) toggleLetter.addEventListener("click",()=>{ const open=letterText.style.display==="block"; letterText.style.display=open?"none":"block"; toggleLetter.textContent=open?"Open":"Close"; });
 
-    // --- Heart confetti (no libs) ---
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
-    let W, H, hearts = [], anim;
-    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight }
-    addEventListener("resize", resize); resize();
-
-    function heartConfetti(){
-      cancelAnimationFrame(anim);
-      hearts = [];
-      const colors = ["#ff91a4","#ffb3c1","#a7f3d0","#b9c3ff","#ffd6a5"];
-      for (let i=0;i<120;i++){
-        hearts.push({
-          x: W/2 + (Math.random()*2-1)*40,
-          y: H/3 + (Math.random()*2-1)*20,
-          vx: (Math.random()*2-1)*3,
-          vy: (Math.random()*-1-0.5)*8 - Math.random()*3,
-          g: .18 + Math.random()*.1,
-          s: 10 + Math.random()*12,
-          r: Math.random()*Math.PI,
-          cr: (Math.random()*.1)+.02,
-          c: colors[(Math.random()*colors.length)|0],
-          life:0, max: 110 + Math.random()*40
-        });
-      }
-      (function loop(){
-        anim = requestAnimationFrame(loop);
-        ctx.clearRect(0,0,W,H);
-        for (const h of hearts){
-          h.life++; if (h.life>h.max) continue;
-          h.vy += h.g; h.x += h.vx; h.y += h.vy; h.r += h.cr;
-          drawHeart(h.x, h.y, h.s, h.c, h.r);
-        }
-        if (hearts.every(h=>h.life>h.max)) cancelAnimationFrame(anim);
-      })();
-    }
-    function drawHeart(x,y,size,color,rot=0){
-      const s = size/2;
-      ctx.save(); ctx.translate(x,y); ctx.rotate(rot); ctx.fillStyle=color;
-      ctx.beginPath();
-      ctx.moveTo(0, s);
-      ctx.bezierCurveTo(s, s, s, 0, 0, -s/3);
-      ctx.bezierCurveTo(-s, 0, -s, s, 0, s);
-      ctx.fill(); ctx.restore();
-    }
-  </script>
-</body>
-</html>
+    // Heart confetti
+    const canvas=document.getElementById("confetti"),ctx=canvas.getContext("2d"); let W,H,hearts=[],anim;
+    function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;} resize(); addEventListener("resize",resize);
+      cancelAnimationFrame(anim); hearts=[];
+      const colors=["#ff91a4","#ffb3c1","#a7f3d0","#b9c3ff","#ffd6e3"];
