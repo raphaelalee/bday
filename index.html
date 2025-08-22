@@ -11,10 +11,10 @@
   <style>
     :root{
       /* Soft pastel palette */
-      --bg-1: #f8f7ff;         /* lilac mist */
-      --bg-2: #fef6f9;         /* blush */
-      --glass: #ffffffd9;      /* frosted white */
-      --ink: #3b3b44;          /* soft charcoal */
+      --bg-1: #f8f7ff;
+      --bg-2: #fef6f9;
+      --glass: #ffffffd9;
+      --ink: #3b3b44;
       --muted: #7b7b8a;
       --stroke: #e8e7f2;
       --accent: #ff91a4;       /* rosy pink */
@@ -39,12 +39,9 @@
       padding:28px;
     }
 
-    /* Floating blobs (very gentle) */
+    /* Floating blobs (gentle) */
     .blob{
-      position: fixed;
-      filter: blur(60px);
-      opacity:.55;
-      z-index:0; pointer-events:none;
+      position: fixed; filter: blur(60px); opacity:.55; z-index:0; pointer-events:none;
     }
     .b1{ width:40vmax; height:40vmax; background:#ffd1dc; top:-10vmax; left:-8vmax; border-radius:50%; animation: float 28s ease-in-out infinite }
     .b2{ width:30vmax; height:30vmax; background:#dbe7ff; bottom:-6vmax; right:-8vmax; border-radius:50%; animation: float2 32s ease-in-out infinite }
@@ -52,9 +49,7 @@
     @keyframes float { 50% { transform: translate(2vmax, 4vmax) } }
     @keyframes float2 { 50% { transform: translate(-2vmax, -3vmax) } }
     @keyframes float3 { 50% { transform: translate(-3vmax, 2vmax) } }
-    @media (prefers-reduced-motion: reduce){
-      .b1,.b2,.b3{ animation: none }
-    }
+    @media (prefers-reduced-motion: reduce){ .b1,.b2,.b3{ animation:none } }
 
     .wrap{
       width:min(980px, 100%);
@@ -77,20 +72,14 @@
     }
     .hero::before{
       content:"";
-      position:absolute; inset:-1px;
-      border-radius: inherit;
-      padding:1px;
+      position:absolute; inset:-1px; border-radius: inherit; padding:1px;
       background: linear-gradient(135deg, #ffd6e0, #bcd3ff, #c7ffe7);
-      background-clip: padding-box;
-
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor; mask-composite: exclude;
-      pointer-events:none;
-      opacity:.7;
-    }  
+      pointer-events:none; opacity:.7;
+    }
     .eyebrow{
-      display:inline-block;
-      padding:6px 12px;
-      border-radius:999px;
+      display:inline-block; padding:6px 12px; border-radius:999px;
       background: linear-gradient(90deg, #ffe3ea, #edf2ff, #e7fff3);
       color:#6c6c7a; font-weight:700; font-size:.8rem; letter-spacing:.3px;
       border:1px solid var(--stroke);
@@ -99,9 +88,7 @@
       margin:10px 0 0;
       font-family:"Playfair Display", Georgia, serif;
       font-size: clamp(34px, 5.8vw, 64px);
-      line-height: 1.02;
-      letter-spacing:.4px;
-      color:#2c2c36;
+      line-height: 1.02; letter-spacing:.4px; color:#2c2c36;
     }
     .subtitle{ margin-top:8px; color:#6b6b7a; font-weight:500 }
 
@@ -114,8 +101,8 @@
       padding:20px;
     }
     .card h2{
-      margin:0 0 10px;
-      font-size: .95rem; letter-spacing:.35px; color:#6c6c7a; text-transform:uppercase;
+      margin:0 0 10px; font-size: .95rem; letter-spacing:.35px;
+      color:#6c6c7a; text-transform:uppercase;
     }
 
     /* Info rows */
@@ -141,8 +128,7 @@
       font-variant-numeric: tabular-nums;
     }
     .pill{
-      min-width:86px; text-align:center;
-      border-radius:16px; padding:12px 10px;
+      min-width:86px; text-align:center; border-radius:16px; padding:12px 10px;
       background:linear-gradient(180deg, #ffffff, #f7f7ff);
       border:1px solid var(--stroke);
     }
@@ -188,6 +174,41 @@
 
     /* Confetti canvas (hearts) */
     #confetti{ position:fixed; inset:0; pointer-events:none; z-index:5 }
+
+    /* Mini Calendar */
+    .calendar{
+      border-radius:16px; border:1px solid var(--stroke);
+      background:linear-gradient(180deg, #ffffff, #fbfbff);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cal-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px; border-bottom:1px solid var(--stroke);
+      background: linear-gradient(90deg, #ffe3ea, #edf2ff, #e7fff3);
+    }
+    .cal-title{ font-weight:800 }
+    .cal-grid{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap:0; padding:10px;
+    }
+    .dow, .day{
+      text-align:center; padding:10px 6px; font-weight:600; color:#7b7b8a;
+    }
+    .day{
+      border-radius:12px; margin:4px; color:var(--ink); font-weight:700;
+    }
+    .day.disabled{ opacity:.35; font-weight:600 }
+    .day.event{
+      position:relative; background: #fff0f4; color:#d9466a; box-shadow: inset 0 0 0 2px #ffd6e3;
+    }
+    .day.event::after{
+      content:"💗"; position:absolute; right:8px; top:6px; font-size:14px; opacity:.9;
+    }
+    .cal-foot{
+      padding:10px 12px; border-top:1px solid var(--stroke); color:#7b7b8a; font-size:.85rem;
+    }
   </style>
 </head>
 <body>
@@ -233,32 +254,48 @@
 
     <!-- RIGHT -->
     <section class="card">
-      <h2>Plan</h2>
+      <h2>Plan & RSVP</h2>
       <ul class="timeline">
-        <li><span class="dot"></span><strong>Gift Opening</strong> 
-        <li><span class="dot"></span><strong>Simple Lunch Together</strong> 
+        <li><span class="dot"></span><strong>Gift Opening</strong> — quick reveal to kick things off</li>
+        <li><span class="dot"></span><strong>Lunch Together</strong> — easy, chill, unhurried</li>
         <li><span class="dot"></span><strong>Photobooth</strong> — snapshots + memories</li>
-        <li><span class="dot"></span><strong>Dinner</strong> 
+        <li><span class="dot"></span><strong>Romantic Dinner</strong> — dressed in white</li>
       </ul>
 
       <div style="margin-top:16px">
-        <h2>RSVP</h2>
-        <p class="small">Are you coming?</p>
         <div class="actions">
-          <button class="btn-primary" id="yesBtn">Yes</button>
-          <button class="btn-ghost" id="calBtn" title="Download calendar event">Add to Calendar</button>
+          <button class="btn-primary" id="yesBtn">Yes, I’m coming 💗</button>
+          <button class="btn-ghost" id="calBtn" title="Download calendar event">Add to Calendar (.ics)</button>
+          <a id="gcalLink" class="btn btn-ghost" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
         </div>
         <p class="note" id="yay">Yay! See you soon 💞</p>
+      </div>
+    </section>
+
+    <!-- INLINE CALENDAR -->
+    <section class="card">
+      <h2>Calendar</h2>
+      <div class="calendar" id="miniCal">
+        <div class="cal-head">
+          <div class="cal-title" id="calTitle">August 2025</div>
+        </div>
+        <div class="cal-grid" id="calGrid">
+          <!-- JS injects day-of-week + days -->
+        </div>
+        <div class="cal-foot">
+          Event highlighted with a heart on the exact date. Timezone: GMT+8 (Singapore).
+        </div>
       </div>
     </section>
   </main>
 
   <script>
-    // Date/time explicit with GMT+8
-    const eventISO = "2025-08-26T13:00:00+08:00";
-    const eventMs = new Date(eventISO).getTime();
+    // --- Event Date/Time (explicit GMT+8) ---
+    const eventISO = "2025-08-26T13:00:00+08:00"; // Tue, 26 Aug 2025, 1:00 PM GMT+8
+    const eventDate = new Date(eventISO);
+    const eventMs = eventDate.getTime();
 
-    // Countdown
+    // --- Countdown ---
     const el = {
       d: document.getElementById("d"),
       h: document.getElementById("h"),
@@ -283,7 +320,7 @@
     }
     tick(); setInterval(tick, 1000);
 
-    // RSVP + heart confetti
+    // --- RSVP + heart confetti ---
     const yay = document.getElementById("yay");
     const yesBtn = document.getElementById("yesBtn");
     yesBtn.addEventListener("click", () => {
@@ -291,11 +328,11 @@
       heartConfetti();
     });
 
-    // Add to Calendar (.ics)
+    // --- Add to Calendar (.ics) ---
     document.getElementById("calBtn").addEventListener("click", () => {
       const title = "Happy 20th Birthday";
-      const start = toICSDate(new Date(eventISO));
-      const end = toICSDate(new Date(new Date(eventISO).getTime() + 2*60*60*1000)); // +2h
+      const start = toICSDate(eventDate);
+      const end = toICSDate(new Date(eventDate.getTime() + 2*60*60*1000)); // +2h
       const desc = "Meet at your house. Dress code: White. Next stop: Secret restaurant.";
       const loc = "Your House";
       const ics = [
@@ -311,6 +348,18 @@
       const a = Object.assign(document.createElement("a"), {href:url, download:"birthday.ics"});
       document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
     });
+
+    // --- Google Calendar link (pre-filled) ---
+    const gLink = document.getElementById("gcalLink");
+    const gTitle = encodeURIComponent("Happy 20th Birthday");
+    // Google Calendar expects UTC in YYYYMMDDTHHMMSSZ
+    const gStart = toICSDate(eventDate);
+    const gEnd = toICSDate(new Date(eventDate.getTime() + 2*60*60*1000));
+    const gDetails = encodeURIComponent("Meet at your house. Dress code: White. Next stop: Secret restaurant.");
+    const gLocation = encodeURIComponent("Your House");
+    gLink.href =
+      `https://calendar.google.com/calendar/r/eventedit?text=${gTitle}&dates=${gStart}/${gEnd}&details=${gDetails}&location=${gLocation}`;
+
     function toICSDate(dt){
       const pad = n => String(n).padStart(2,"0");
       return dt.getUTCFullYear() + pad(dt.getUTCMonth()+1) + pad(dt.getUTCDate()) + "T" +
@@ -318,7 +367,56 @@
     }
     function esc(s){ return String(s).replace(/([,;])/g,"\\$1").replace(/\n/g,"\\n") }
 
-    // Heart confetti (lightweight, no libs)
+    // --- Mini Calendar Builder (month of the event) ---
+    const calTitle = document.getElementById("calTitle");
+    const calGrid = document.getElementById("calGrid");
+
+    buildMiniCalendar(eventDate);
+
+    function buildMiniCalendar(date){
+      // Month metadata (local to your browser’s TZ; event itself is fixed GMT+8)
+      const y = date.getFullYear();
+      const m = date.getMonth(); // 0..11
+      const firstOfMonth = new Date(Date.UTC(y, m, 1));
+      const startWeekday = (firstOfMonth.getUTCDay() + 6) % 7; // make Monday=0
+      const daysInMonth = new Date(Date.UTC(y, m+1, 0)).getUTCDate();
+
+      const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      calTitle.textContent = `${monthNames[m]} ${y}`;
+
+      calGrid.innerHTML = "";
+      const dows = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+      for (const d of dows){
+        const el = document.createElement("div");
+        el.className = "dow";
+        el.textContent = d;
+        calGrid.appendChild(el);
+      }
+
+      // Leading blanks
+      for (let i=0;i<startWeekday;i++){
+        const blank = document.createElement("div");
+        blank.className = "day disabled";
+        blank.textContent = "";
+        calGrid.appendChild(blank);
+      }
+
+      // Days
+      for (let day=1; day<=daysInMonth; day++){
+        const cell = document.createElement("div");
+        cell.className = "day";
+        cell.textContent = day;
+
+        if (y === eventDate.getUTCFullYear() && m === eventDate.getUTCMonth() && day === eventDate.getUTCDate()){
+          cell.classList.add("event");
+          cell.title = "Happy 20th Birthday • 1:00 PM (GMT+8)";
+        }
+
+        calGrid.appendChild(cell);
+      }
+    }
+
+    // --- Heart confetti (no libs) ---
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
     let W, H, hearts = [], anim;
