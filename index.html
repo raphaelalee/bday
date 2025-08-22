@@ -22,6 +22,31 @@
       --accent-3: #b9c3ff;     /* periwinkle */
       --shadow: 0 12px 30px rgba(79,57,123,.12);
       --radius: 22px;
+      .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(90deg, #ffe3ea, #edf2ff, #e7fff3);
+  border-bottom: 1px solid var(--stroke);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+}
+
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.logo {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #d9466a;
+  letter-spacing: 1px;
+}
+
     }
 
     * { box-sizing: border-box }
@@ -463,4 +488,10 @@
     }
   </script>
 </body>
+<header class="site-header">
+  <div class="header-inner">
+    <h2 class="logo">🌸 HAPPY 20TH BIRTHDAY MY LOVE 🌸</h2>
+  </div>
+</header>
+
 </html>
