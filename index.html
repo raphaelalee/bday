@@ -5,398 +5,363 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Happy 20th Birthday!</title>
 
-  <!-- Fonts: strong/clean pairing -->
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg-1:#0b0f1a;         /* charcoal/navy */
-      --bg-2:#111827;         /* deep slate */
-      --text:#e5e7eb;         /* slate-100 */
-      --muted:#94a3b8;        /* slate-400 */
-      --card:#0f172aee;       /* semi-opaque slate */
-      --stroke:#1f2937;       /* borders */
-      --accent:#f59e0b;       /* warm amber */
-      --accent-2:#22d3ee;     /* cyan pop */
-      --good:#10b981;         /* success */
+      /* Soft pastel palette */
+      --bg-1: #f8f7ff;         /* lilac mist */
+      --bg-2: #fef6f9;         /* blush */
+      --glass: #ffffffd9;      /* frosted white */
+      --ink: #3b3b44;          /* soft charcoal */
+      --muted: #7b7b8a;
+      --stroke: #e8e7f2;
+      --accent: #ff91a4;       /* rosy pink */
+      --accent-2: #a7f3d0;     /* mint */
+      --accent-3: #b9c3ff;     /* periwinkle */
+      --shadow: 0 12px 30px rgba(79,57,123,.12);
+      --radius: 22px;
     }
 
-    *{box-sizing:border-box}
+    * { box-sizing: border-box }
+    html, body { height: 100% }
 
     body{
       margin:0;
-      min-height:100svh;
-      color:var(--text);
+      color:var(--ink);
       background:
-        radial-gradient(1200px 600px at 10% -20%, #1f2937 0%, transparent 60%),
-        radial-gradient(800px 400px at 110% 10%, #0e7490 0%, transparent 55%),
-        radial-gradient(800px 800px at 50% 120%, #111827 0%, transparent 60%),
+        radial-gradient(1200px 600px at 15% 0%, #ffeaf0 0%, #ffeaf000 60%),
+        radial-gradient(1000px 700px at 90% 10%, #e9f9ff 0%, #e9f9ff00 60%),
         linear-gradient(180deg, var(--bg-1), var(--bg-2));
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      display:flex; align-items:center; justify-content:center; padding:32px;
+      font-family: Outfit, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      display:flex; align-items:center; justify-content:center;
+      padding:28px;
+    }
+
+    /* Floating blobs (very gentle) */
+    .blob{
+      position: fixed;
+      filter: blur(60px);
+      opacity:.55;
+      z-index:0; pointer-events:none;
+    }
+    .b1{ width:40vmax; height:40vmax; background:#ffd1dc; top:-10vmax; left:-8vmax; border-radius:50%; animation: float 28s ease-in-out infinite }
+    .b2{ width:30vmax; height:30vmax; background:#dbe7ff; bottom:-6vmax; right:-8vmax; border-radius:50%; animation: float2 32s ease-in-out infinite }
+    .b3{ width:26vmax; height:26vmax; background:#c9ffe2; top:20vmax; left:55vw; border-radius:50%; animation: float3 36s ease-in-out infinite }
+    @keyframes float { 50% { transform: translate(2vmax, 4vmax) } }
+    @keyframes float2 { 50% { transform: translate(-2vmax, -3vmax) } }
+    @keyframes float3 { 50% { transform: translate(-3vmax, 2vmax) } }
+    @media (prefers-reduced-motion: reduce){
+      .b1,.b2,.b3{ animation: none }
     }
 
     .wrap{
-      width:min(940px, 100%);
-      display:grid;
-      gap:24px;
-      grid-template-columns: 1.1fr .9fr;
+      width:min(980px, 100%);
+      display:grid; gap:22px;
+      grid-template-columns: 1.2fr .8fr;
+      position:relative; z-index:1;
     }
-    @media (max-width:900px){
-      .wrap{grid-template-columns:1fr}
-    }
+    @media (max-width:900px){ .wrap{ grid-template-columns:1fr } }
 
-    /* Hero */
+    /* Glassy hero */
     .hero{
       grid-column:1 / -1;
+      border-radius: calc(var(--radius) + 4px);
+      background: var(--glass);
       border:1px solid var(--stroke);
-      border-radius:20px;
-      padding:28px 24px;
-      background:linear-gradient(180deg, #0b1221, #0a1120cc 65%);
+      box-shadow: var(--shadow);
+      padding:26px 22px;
       position:relative;
       overflow:hidden;
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
     }
     .hero::before{
       content:"";
       position:absolute; inset:-1px;
-      border-radius:20px;
+      border-radius: inherit;
       padding:1px;
-      background:conic-gradient(from 180deg at 50% 50%, rgba(245,158,11,.7), rgba(34,211,238,.6), rgba(245,158,11,.7));
-      -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#0000 0 0);
+      background: linear-gradient(135deg, #ffd6e0, #bcd3ff, #c7ffe7);
+      background-clip: padding-box;
+
       -webkit-mask-composite: xor; mask-composite: exclude;
       pointer-events:none;
-    }
-    .title{
-      display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
-    }
-    .title h1{
-      margin:0;
-      font-family:"Bebas Neue", Inter, sans-serif;
-      letter-spacing:.6px;
-      font-size:clamp(36px, 6vw, 64px);
-      line-height:.9;
-      color:#fff;
-      text-shadow:0 2px 16px rgba(0,0,0,.35);
-    }
-    .badge{
+      opacity:.7;
+    }  
+    .eyebrow{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background: linear-gradient(90deg, #ffe3ea, #edf2ff, #e7fff3);
+      color:#6c6c7a; font-weight:700; font-size:.8rem; letter-spacing:.3px;
       border:1px solid var(--stroke);
-      color:var(--accent);
-      background:#111827b3;
-      padding:6px 10px; border-radius:999px; font-weight:700; letter-spacing:.3px; font-size:.85rem;
     }
-    .subtitle{
-      margin-top:8px; color:var(--muted); font-weight:600;
+    h1{
+      margin:10px 0 0;
+      font-family:"Playfair Display", Georgia, serif;
+      font-size: clamp(34px, 5.8vw, 64px);
+      line-height: 1.02;
+      letter-spacing:.4px;
+      color:#2c2c36;
     }
+    .subtitle{ margin-top:8px; color:#6b6b7a; font-weight:500 }
 
-    /* Card base */
+    /* Cards */
     .card{
+      border-radius: var(--radius);
+      background: var(--glass);
       border:1px solid var(--stroke);
-      background:var(--card);
-      border-radius:16px;
+      box-shadow: var(--shadow);
       padding:20px;
-      box-shadow:0 8px 24px rgba(0,0,0,.35);
     }
     .card h2{
       margin:0 0 10px;
-      font-size:1rem;
-      letter-spacing:.4px;
-      color:var(--muted);
-      text-transform:uppercase;
+      font-size: .95rem; letter-spacing:.35px; color:#6c6c7a; text-transform:uppercase;
     }
 
-    /* Info blocks */
-    .info{
-      display:grid; gap:14px;
-    }
-    .info-row{
-      display:flex; align-items:center; justify-content:space-between;
+    /* Info rows */
+    .info{ display:grid; gap:12px }
+    .row{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:14px 16px; border-radius:16px;
+      background:linear-gradient(180deg, #ffffff, #fafaff);
       border:1px solid var(--stroke);
-      border-radius:12px; padding:14px 16px;
-      background:linear-gradient(180deg,#0c1426,#0b1223);
     }
-    .info-label{ color:var(--muted); font-weight:600; font-size:.95rem; }
-    .info-value{ font-weight:800; letter-spacing:.3px; }
+    .lbl{ color:#7b7b8a; font-weight:600 }
+    .val{ font-weight:800 }
 
     .link{
-      color:var(--accent-2); font-weight:700; text-decoration:none;
-      border-bottom:1px dashed rgba(34,211,238,.35);
+      color:#5870ff; text-decoration:none; font-weight:700;
+      border-bottom:1px dashed #c7d0ff;
     }
     .link:hover{ opacity:.9 }
 
     /* Countdown */
-    .countdown{
-      font-variant-numeric:tabular-nums;
-      display:flex; gap:10px; flex-wrap:wrap;
+    .count{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;
+      font-variant-numeric: tabular-nums;
     }
-    .tbox{
-      min-width:92px;
-      text-align:center;
+    .pill{
+      min-width:86px; text-align:center;
+      border-radius:16px; padding:12px 10px;
+      background:linear-gradient(180deg, #ffffff, #f7f7ff);
       border:1px solid var(--stroke);
-      border-radius:12px; padding:12px 10px;
-      background:linear-gradient(180deg,#0c1426,#0b1223);
     }
-    .tbox .num{ display:block; font-size:1.8rem; font-weight:800 }
-    .tbox .lbl{ color:var(--muted); font-size:.8rem; letter-spacing:.6px }
+    .num{ display:block; font-size:1.8rem; font-weight:800 }
+    .lab{ color:#7b7b8a; font-size:.8rem }
 
-    /* Itinerary / timeline */
-    .timeline{
-      list-style:none; margin:0; padding:0; display:grid; gap:12px;
-    }
+    /* Timeline */
+    .timeline{ list-style:none; margin:0; padding:0; display:grid; gap:12px }
     .timeline li{
       display:flex; align-items:center; gap:12px;
+      padding:12px 14px; border-radius:14px;
+      background:linear-gradient(180deg, #ffffff, #fbfbff);
       border:1px solid var(--stroke);
-      padding:12px 14px; border-radius:12px;
-      background:linear-gradient(180deg,#0c1426,#0b1223);
-      transition:transform .18s ease;
+      transition: transform .15s ease;
     }
-    .timeline li:hover{ transform:translateY(-2px) }
+    .timeline li:hover{ transform: translateY(-2px) }
     .dot{
       width:10px; height:10px; border-radius:50%;
-      background:linear-gradient(180deg,var(--accent), #b45309);
-      box-shadow:0 0 0 3px rgba(245,158,11,.15);
+      background: radial-gradient(circle at 30% 30%, #ffabc0, #ff7796);
+      box-shadow: 0 0 0 4px #ffe5ec;
       flex:0 0 auto;
     }
 
-    /* Actions */
-    .actions{ display:flex; gap:12px; flex-wrap:wrap }
-    button, .btn-link{
-      cursor:pointer; border:none; font-weight:800; letter-spacing:.3px;
-      padding:12px 16px; border-radius:12px;
-      transition:transform .12s ease, box-shadow .12s ease, background .12s ease, opacity .12s ease;
+    /* Buttons */
+    .actions{ display:flex; gap:10px; flex-wrap:wrap }
+    button, .btn{
+      cursor:pointer; border:none; font-weight:800; letter-spacing:.2px;
+      padding:12px 16px; border-radius:14px;
+      transition: transform .1s ease, box-shadow .1s ease, opacity .1s ease;
     }
     .btn-primary{
-      background:linear-gradient(180deg, #f59e0b, #b45309);
-      color:#0b0f1a;
-      box-shadow: 0 6px 18px rgba(245,158,11,.3);
+      color:#2a2a34;
+      background: linear-gradient(135deg, #ffd2dc, #bcd3ff 70%, #c7ffe7);
+      box-shadow: 0 10px 18px rgba(187, 167, 255, .25);
     }
-    .btn-primary:hover{ transform:translateY(-1px) }
     .btn-ghost{
-      background:#0b1223; color:var(--text); border:1px solid var(--stroke);
+      background:#ffffff; border:1px solid var(--stroke); color:var(--ink);
     }
-    .note{
-      margin-top:10px; color:var(--good); font-weight:800;
-    }
+    .btn-primary:hover, .btn-ghost:hover{ transform: translateY(-1px) }
 
-    /* Small print */
-    .small{
-      color:var(--muted); font-size:.85rem; margin-top:8px;
-    }
+    .note{ margin-top:10px; color:#2f6d52; font-weight:800; display:none }
+    .small{ color:#7b7b8a; font-size:.85rem; margin-top:6px }
 
-    /* Confetti canvas */
-    #confetti{ position:fixed; inset:0; pointer-events:none; z-index:5; }
+    /* Confetti canvas (hearts) */
+    #confetti{ position:fixed; inset:0; pointer-events:none; z-index:5 }
   </style>
 </head>
 <body>
+  <!-- soft blobs -->
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
   <canvas id="confetti"></canvas>
 
   <main class="wrap">
     <!-- HERO -->
     <section class="hero">
-      <div class="title">
-        <h1>Happy 20th Birthday</h1>
-        <span class="badge">26 Aug 2025 • 1:00 PM (GMT+8)</span>
-      </div>
-      <p class="subtitle">Minimal, bold, and just for you — see you there.</p>
+      <span class="eyebrow">✨ It’s your day</span>
+      <h1>Happy 20th Birthday, Babyboo!</h1>
+      <p class="subtitle">Tuesday • 26 Aug 2025 • 1:00 PM (GMT+8)</p>
     </section>
 
-    <!-- LEFT COLUMN -->
+    <!-- LEFT -->
+    <section class="card">
+      <h2>Details</h2>
+      <div class="info">
+        <div class="row"><span class="lbl">Meet-up</span><span class="val">Your house</span></div>
+        <div class="row"><span class="lbl">Time</span><span class="val">1:00 PM • 26 Aug 2025</span></div>
+        <div class="row"><span class="lbl">Dress Code</span><span class="val">White 🤍</span></div>
+        <div class="row">
+          <span class="lbl">Next Stop</span>
+          <span class="val"><a class="link" href="" target="_blank" rel="noopener">Secret restaurant</a></span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <h2>Countdown</h2>
+        <div class="count" id="countdown">
+          <div class="pill"><span class="num" id="d">--</span><span class="lab">Days</span></div>
+          <div class="pill"><span class="num" id="h">--</span><span class="lab">Hours</span></div>
+          <div class="pill"><span class="num" id="m">--</span><span class="lab">Minutes</span></div>
+          <div class="pill"><span class="num" id="s">--</span><span class="lab">Seconds</span></div>
+        </div>
+        <p class="small">Counting down to 26 Aug 2025, 1:00 PM (GMT+8).</p>
+      </div>
+    </section>
+
+    <!-- RIGHT -->
     <section class="card">
       <h2>Plan</h2>
-      <div class="info">
-        <div class="info-row">
-          <div class="info-label">Meet-up</div>
-          <div class="info-value">Your place</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Time</div>
-          <div class="info-value">1:00 PM • Tue, 26 Aug 2025</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Dress Code</div>
-          <div class="info-value">White</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Next Stop</div>
-          <div class="info-value">
-            <a class="link" href="" target="_blank" rel="noopener">Secret Restaurant</a>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top:18px">
-        <h2>Countdown</h2>
-        <div class="countdown" id="countdown">
-          <div class="tbox"><span class="num" id="d">--</span><span class="lbl">Days</span></div>
-          <div class="tbox"><span class="num" id="h">--</span><span class="lbl">Hours</span></div>
-          <div class="tbox"><span class="num" id="m">--</span><span class="lbl">Minutes</span></div>
-          <div class="tbox"><span class="num" id="s">--</span><span class="lbl">Seconds</span></div>
-        </div>
-        <p class="small">Counts down to 26 Aug 2025, 1:00 PM (GMT+8).</p>
-      </div>
-    </section>
-
-    <!-- RIGHT COLUMN -->
-    <section class="card">
-      <h2>Itinerary</h2>
       <ul class="timeline">
-        <li><span class="dot"></span><strong>Gift Unwrap</strong> — quick reveal to kick things off</li>
+        <li><span class="dot"></span><strong>Gift Opening</strong> — quick reveal to kick things off</li>
         <li><span class="dot"></span><strong>Lunch Together</strong> — easy, chill, unhurried</li>
         <li><span class="dot"></span><strong>Photobooth</strong> — snapshots + memories</li>
-        <li><span class="dot"></span><strong>Romantic Dinner</strong> — dress code checks out</li>
+        <li><span class="dot"></span><strong>Romantic Dinner</strong> — dressed in white</li>
       </ul>
 
-      <div style="margin-top:18px">
+      <div style="margin-top:16px">
         <h2>RSVP</h2>
         <p class="small">Are you coming?</p>
         <div class="actions">
           <button class="btn-primary" id="yesBtn">Yes</button>
-          <button class="btn-ghost" id="calBtn" title="Download .ics calendar event">Add to Calendar</button>
+          <button class="btn-ghost" id="calBtn" title="Download calendar event">Add to Calendar</button>
         </div>
-        <p class="note" id="yay" hidden>Locked in — see you, babyboo. ✨</p>
+        <p class="note" id="yay">Yay! See you soon 💞</p>
       </div>
     </section>
   </main>
 
   <script>
-    // --- Date (explicit timezone GMT+8) ---
-    const eventISO = "2025-08-26T13:00:00+08:00"; // 1:00 PM GMT+8
-    const eventDate = new Date(eventISO).getTime();
+    // Date/time explicit with GMT+8
+    const eventISO = "2025-08-26T13:00:00+08:00";
+    const eventMs = new Date(eventISO).getTime();
 
-    // --- Countdown ---
-    const ids = { d:"d", h:"h", m:"m", s:"s" };
-    const el = Object.fromEntries(Object.entries(ids).map(([k,v]) => [k, document.getElementById(v)]));
-
-    function updateTimer(){
+    // Countdown
+    const el = {
+      d: document.getElementById("d"),
+      h: document.getElementById("h"),
+      m: document.getElementById("m"),
+      s: document.getElementById("s"),
+    };
+    function tick(){
       const now = Date.now();
-      const diff = eventDate - now;
-
+      const diff = eventMs - now;
       if (diff <= 0){
-        el.d.textContent = "0";
-        el.h.textContent = "0";
-        el.m.textContent = "0";
-        el.s.textContent = "0";
+        el.d.textContent = "0"; el.h.textContent = "00"; el.m.textContent = "00"; el.s.textContent = "00";
         return;
       }
-
       const d = Math.floor(diff / (1000*60*60*24));
       const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
       const m = Math.floor((diff % (1000*60*60)) / (1000*60));
       const s = Math.floor((diff % (1000*60)) / 1000);
-
       el.d.textContent = d;
       el.h.textContent = h.toString().padStart(2,"0");
       el.m.textContent = m.toString().padStart(2,"0");
       el.s.textContent = s.toString().padStart(2,"0");
     }
-    updateTimer();
-    setInterval(updateTimer, 1000);
+    tick(); setInterval(tick, 1000);
 
-    // --- RSVP + confetti ---
+    // RSVP + heart confetti
     const yay = document.getElementById("yay");
-    document.getElementById("yesBtn").addEventListener("click", () => {
-      yay.hidden = false;
-      fireConfetti();
+    const yesBtn = document.getElementById("yesBtn");
+    yesBtn.addEventListener("click", () => {
+      yay.style.display = "block";
+      heartConfetti();
     });
 
-    // --- Add to Calendar (.ics download) ---
+    // Add to Calendar (.ics)
     document.getElementById("calBtn").addEventListener("click", () => {
       const title = "Happy 20th Birthday";
       const start = toICSDate(new Date(eventISO));
-      const end = toICSDate(new Date(new Date(eventISO).getTime() + 2 * 60 * 60 * 1000)); // default 2 hrs
-      const desc = "Meet at your place. Dress code: White. Next stop: Secret Restaurant.";
-      const loc = "Your Place";
-
+      const end = toICSDate(new Date(new Date(eventISO).getTime() + 2*60*60*1000)); // +2h
+      const desc = "Meet at your house. Dress code: White. Next stop: Secret restaurant.";
+      const loc = "Your House";
       const ics = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Birthday//EN",
-        "BEGIN:VEVENT",
-        `UID:${crypto.randomUUID()}@birthday.local`,
+        "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Birthday//EN","BEGIN:VEVENT",
+        `UID:${crypto.randomUUID()}@cute.party`,
         `DTSTAMP:${toICSDate(new Date())}`,
-        `DTSTART:${start}`,
-        `DTEND:${end}`,
-        `SUMMARY:${escapeICS(title)}`,
-        `DESCRIPTION:${escapeICS(desc)}`,
-        `LOCATION:${escapeICS(loc)}`,
-        "END:VEVENT",
-        "END:VCALENDAR"
+        `DTSTART:${start}`,`DTEND:${end}`,
+        `SUMMARY:${esc(title)}`,`DESCRIPTION:${esc(desc)}`,`LOCATION:${esc(loc)}`,
+        "END:VEVENT","END:VCALENDAR"
       ].join("\r\n");
-
       const blob = new Blob([ics], {type:"text/calendar;charset=utf-8"});
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "birthday.ics";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+      const a = Object.assign(document.createElement("a"), {href:url, download:"birthday.ics"});
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
     });
-
     function toICSDate(dt){
-      // returns UTC in YYYYMMDDTHHMMSSZ
       const pad = n => String(n).padStart(2,"0");
-      return dt.getUTCFullYear().toString() +
-             pad(dt.getUTCMonth()+1) +
-             pad(dt.getUTCDate()) + "T" +
-             pad(dt.getUTCHours()) +
-             pad(dt.getUTCMinutes()) +
-             pad(dt.getUTCSeconds()) + "Z";
+      return dt.getUTCFullYear() + pad(dt.getUTCMonth()+1) + pad(dt.getUTCDate()) + "T" +
+             pad(dt.getUTCHours()) + pad(dt.getUTCMinutes()) + pad(dt.getUTCSeconds()) + "Z";
     }
-    function escapeICS(s){
-      return String(s).replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
-    }
+    function esc(s){ return String(s).replace(/([,;])/g,"\\$1").replace(/\n/g,"\\n") }
 
-    // --- Minimal confetti (no libs) ---
+    // Heart confetti (lightweight, no libs)
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
-    let w, h, particles = [], anim;
+    let W, H, hearts = [], anim;
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight }
+    addEventListener("resize", resize); resize();
 
-    function resize(){
-      w = canvas.width = innerWidth;
-      h = canvas.height = innerHeight;
-    }
-    addEventListener("resize", resize);
-    resize();
-
-    function fireConfetti(){
+    function heartConfetti(){
       cancelAnimationFrame(anim);
-      particles = [];
-      const colors = ["#f59e0b","#22d3ee","#10b981","#eab308","#38bdf8","#f97316"];
-      for (let i=0;i<140;i++){
-        particles.push({
-          x: w/2, y: h/3,
-          vx: (Math.random()*2-1)*6,
-          vy: (Math.random()*-1-0.5)*10 - Math.random()*6,
-          g: 0.22 + Math.random()*0.15,
-          s: 4 + Math.random()*6,
+      hearts = [];
+      const colors = ["#ff91a4","#ffb3c1","#a7f3d0","#b9c3ff","#ffd6a5"];
+      for (let i=0;i<120;i++){
+        hearts.push({
+          x: W/2 + (Math.random()*2-1)*40,
+          y: H/3 + (Math.random()*2-1)*20,
+          vx: (Math.random()*2-1)*3,
+          vy: (Math.random()*-1-0.5)*8 - Math.random()*3,
+          g: .18 + Math.random()*.1,
+          s: 10 + Math.random()*12,
           r: Math.random()*Math.PI,
-          cr: (Math.random()*0.1)+0.02,
-          color: colors[(Math.random()*colors.length)|0],
-          life: 0, max: 110 + Math.random()*35
+          cr: (Math.random()*.1)+.02,
+          c: colors[(Math.random()*colors.length)|0],
+          life:0, max: 110 + Math.random()*40
         });
       }
       (function loop(){
         anim = requestAnimationFrame(loop);
-        ctx.clearRect(0,0,w,h);
-        for (const p of particles){
-          p.life++;
-          if (p.life > p.max) continue;
-          p.vy += p.g;
-          p.x += p.vx;
-          p.y += p.vy;
-          p.r += p.cr;
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.r);
-          ctx.fillStyle = p.color;
-          ctx.fillRect(-p.s/2, -p.s/2, p.s, p.s);
-          ctx.restore();
+        ctx.clearRect(0,0,W,H);
+        for (const h of hearts){
+          h.life++; if (h.life>h.max) continue;
+          h.vy += h.g; h.x += h.vx; h.y += h.vy; h.r += h.cr;
+          drawHeart(h.x, h.y, h.s, h.c, h.r);
         }
-        // stop when everyone is done
-        if (particles.every(p=>p.life>p.max)) cancelAnimationFrame(anim);
+        if (hearts.every(h=>h.life>h.max)) cancelAnimationFrame(anim);
       })();
+    }
+    function drawHeart(x,y,size,color,rot=0){
+      const s = size/2;
+      ctx.save(); ctx.translate(x,y); ctx.rotate(rot); ctx.fillStyle=color;
+      ctx.beginPath();
+      ctx.moveTo(0, s);
+      ctx.bezierCurveTo(s, s, s, 0, 0, -s/3);
+      ctx.bezierCurveTo(-s, 0, -s, s, 0, s);
+      ctx.fill(); ctx.restore();
     }
   </script>
 </body>
